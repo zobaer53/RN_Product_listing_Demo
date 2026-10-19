@@ -18,7 +18,9 @@ module.exports = {
     '<rootDir>/tests/**/*.spec.ts?(x)',
     '<rootDir>/plugins/**/*.spec.ts',
   ],
-  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.claude/', '<rootDir>/e2e/'],
+  // Only crawl source folders (keeps local tooling and hidden folders out of the haste map).
+  roots: ['<rootDir>/src', '<rootDir>/tests', '<rootDir>/plugins'],
+  testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@shopify/.*|react-native-paper|react-native-mmkv|react-native-nitro-modules|msw|@mswjs/.*|@msw/.*|until-async|rettime|outvariant|is-node-process|headers-polyfill|cookie|@open-draft/.*|strict-event-emitter|@tanstack/.*).+(?<!\\.mjs)$',
   ],

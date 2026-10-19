@@ -56,7 +56,7 @@ module.exports = defineConfig([
   expoConfig,
   prettierConfig,
   {
-    ignores: ['dist/*', 'android/*', 'ios/*', '.expo/*', 'coverage/*', '.claude/*', 'docs/*'],
+    ignores: ['dist/*', 'android/*', 'ios/*', '.expo/*', 'coverage/*', '.*/**', 'docs/*'],
   },
   {
     rules: {

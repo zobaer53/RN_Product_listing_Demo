@@ -3,7 +3,10 @@ coverage
 android
 ios
 .expo
-.claude
+/.*/
+!/.github/
+!/.maestro/
+!/.vscode/
 docs/local
 assets
 package-lock.json
