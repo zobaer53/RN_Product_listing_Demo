@@ -1,0 +1,77 @@
+# Paced walkthrough for screen recordings (not a test). Run with:
+#   maestro record .maestro/showcase/showcase.yaml
+appId: com.zobaer53.productexplorer
+name: Showcase
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Browse: scroll far enough to load the next page.
+- scroll
+- waitForAnimationToEnd
+- scroll
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: 'product-card-12'
+    direction: DOWN
+    speed: 30
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Open a product.
+- tapOn:
+    id: 'product-card-12'
+- extendedWaitUntil:
+    visible:
+      id: 'details-title'
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Swipe through the gallery.
+- swipe:
+    from:
+      id: 'details-carousel'
+    direction: LEFT
+- waitForAnimationToEnd
+- swipe:
+    from:
+      id: 'details-carousel'
+    direction: LEFT
+- waitForAnimationToEnd
+
+# Read on down to the reviews.
+- scrollUntilVisible:
+    element:
+      id: 'details-reviews'
+    direction: DOWN
+    speed: 30
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Back to the list and refresh it.
+- tapOn:
+    id: 'details-back'
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      id: 'product-card-1'
+    direction: UP
+    speed: 40
+- swipe:
+    start: '50%, 35%'
+    end: '50%, 85%'
+    duration: 800
+- waitForAnimationToEnd:
+    timeout: 3000
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 15000

@@ -1,0 +1,37 @@
+appId: com.zobaer53.productexplorer
+name: E2E-08 failing next page shows footer retry
+tags:
+  - pagination
+  - mock
+onFlowStart:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: page2-error
+onFlowComplete:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: ok
+---
+- runFlow: ../subflows/launch.yaml
+- assertVisible:
+    id: 'product-card-1'
+- scrollUntilVisible:
+    element:
+      id: 'list-footer-retry'
+    direction: DOWN
+    timeout: 40000
+- assertVisible:
+    id: 'product-card-10'
+- runFlow:
+    file: ../subflows/set-scenario.yaml
+    env:
+      SCENARIO: ok
+- tapOn:
+    id: 'list-footer-retry'
+- scrollUntilVisible:
+    element:
+      id: 'product-card-11'
+    direction: DOWN
+    timeout: 30000

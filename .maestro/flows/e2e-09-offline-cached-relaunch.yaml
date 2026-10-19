@@ -1,0 +1,22 @@
+appId: com.zobaer53.productexplorer
+name: E2E-09 cached list survives an offline relaunch (Android)
+tags:
+  - offline
+  - android-only
+onFlowComplete:
+  - setAirplaneMode: disabled
+---
+- runFlow: ../subflows/launch.yaml
+- assertVisible:
+    id: 'product-card-1'
+- setAirplaneMode: enabled
+- stopApp
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 20000
+- assertVisible:
+    id: 'offline-banner'
+- assertVisible: "You're offline.*"

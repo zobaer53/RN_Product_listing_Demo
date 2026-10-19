@@ -1,0 +1,31 @@
+appId: com.zobaer53.productexplorer
+name: E2E-04 open details and come back
+tags:
+  - smoke
+---
+- runFlow: ../subflows/launch.yaml
+- tapOn:
+    id: 'product-card-1'
+- extendedWaitUntil:
+    visible:
+      id: 'details-title'
+      text: 'Essence Mascara Lash Princess'
+    timeout: 15000
+- assertVisible:
+    id: 'details-price'
+- scrollUntilVisible:
+    element:
+      id: 'details-description'
+    direction: DOWN
+- scrollUntilVisible:
+    element:
+      id: 'details-specs'
+    direction: DOWN
+- scrollUntilVisible:
+    element:
+      id: 'details-reviews'
+    direction: DOWN
+- tapOn:
+    id: 'details-back'
+- assertVisible:
+    id: 'product-list'
