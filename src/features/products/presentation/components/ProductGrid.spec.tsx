@@ -57,6 +57,14 @@ describe('ProductGrid', () => {
     await renderWithProviders(<ProductGrid {...props({ refreshEnabled: false })} />);
     expect(refreshControlOf()).toBeUndefined();
   });
+
+  it('[PC-12] keeps item positions stable when content above the list changes', async () => {
+    // An append-only grid must not shift rows when the banner or header resizes.
+    await renderWithProviders(<ProductGrid {...props()} />);
+    expect(screen.getByTestId(TestIds.productList)).toHaveProp('maintainVisibleContentPosition', {
+      disabled: true,
+    });
+  });
 });
 
 describe('ProductGridSkeleton', () => {
