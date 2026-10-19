@@ -14,8 +14,9 @@ onFlowComplete:
       env:
         SCENARIO: ok
 ---
-- launchApp:
-    clearState: true
+# Cold start from the link (the app is closed), the way users open shared links.
+- stopApp
+- clearState
 - openLink: 'productexplorer://products/99999'
 - extendedWaitUntil:
     visible:

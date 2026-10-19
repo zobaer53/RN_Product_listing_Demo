@@ -3,8 +3,9 @@ name: E2E-11 deep link opens product details
 tags:
   - smoke
 ---
-- launchApp:
-    clearState: true
+# Cold start from the link (the app is closed), the way users open shared links.
+- stopApp
+- clearState
 - openLink: 'productexplorer://products/5'
 - extendedWaitUntil:
     visible:
