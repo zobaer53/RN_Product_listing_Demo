@@ -11,7 +11,7 @@ module.exports = {
     '<rootDir>/tests/setup/jest.setup.ts',
   ],
   testMatch: ['<rootDir>/src/**/*.spec.ts?(x)', '<rootDir>/tests/**/*.spec.ts?(x)'],
-  testPathIgnorePatterns: ['/node_modules/', '/.claude/', '/e2e/'],
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.claude/', '<rootDir>/e2e/'],
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@shopify/.*|react-native-paper|react-native-mmkv|react-native-nitro-modules|msw|@mswjs/.*|@msw/.*|until-async|rettime|outvariant|is-node-process|headers-polyfill|cookie|@open-draft/.*|strict-event-emitter|@tanstack/.*).+(?<!\\.mjs)$',
   ],
