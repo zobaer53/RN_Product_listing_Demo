@@ -48,6 +48,23 @@ describe('ProductDetailsView', () => {
     expect(screen.queryByTestId(TestIds.detailsReviews)).not.toBeOnTheScreen();
   });
 
+  it('[DET-02] keeps the summary and explains why details are missing', async () => {
+    const summary = { product: makeProductSummary(), isPlaceholder: true };
+    await renderWithProviders(
+      <ProductDetailsView
+        {...makeProps({ ...summary, status: 'error', error: new AppError('timeout') })}
+      />,
+    );
+    expect(screen.getByTestId(TestIds.detailsTitle)).toBeOnTheScreen();
+    expect(screen.getByTestId(TestIds.stateError)).toBeOnTheScreen();
+
+    await renderWithProviders(
+      <ProductDetailsView {...makeProps({ ...summary, isOnline: false })} />,
+    );
+    expect(screen.getByTestId(TestIds.detailsTitle)).toBeOnTheScreen();
+    expect(screen.getByTestId(TestIds.stateOffline)).toBeOnTheScreen();
+  });
+
   it('[DET-03] shows not found for a 404 and goes back', async () => {
     const onBack = jest.fn();
     const user = userEvent.setup();
