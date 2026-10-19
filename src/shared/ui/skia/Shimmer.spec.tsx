@@ -24,20 +24,22 @@ describe('Shimmer', () => {
   it('[SH-02] animates the sweep when motion is allowed', async () => {
     mockedReducedMotion.mockReturnValue(false);
     await render(<Shimmer height={20} testID="shimmer" />);
-    expect(screen.getByTestId('shimmer')).toBeOnTheScreen();
+    expect(screen.getByTestId('shimmer', { includeHiddenElements: true })).toBeOnTheScreen();
     expect(mockedWithRepeat).toHaveBeenCalled();
   });
 
   it('[SH-02] stays static when Reduce Motion is on', async () => {
     mockedReducedMotion.mockReturnValue(true);
     await render(<Shimmer height={20} testID="shimmer" />);
-    expect(screen.getByTestId('shimmer')).toBeOnTheScreen();
+    expect(screen.getByTestId('shimmer', { includeHiddenElements: true })).toBeOnTheScreen();
     expect(mockedWithRepeat).not.toHaveBeenCalled();
   });
 
   it('[SH-02] is hidden from assistive technologies', async () => {
     mockedReducedMotion.mockReturnValue(false);
     await render(<Shimmer height={20} width={120} testID="shimmer" />);
-    expect(isHiddenFromAccessibility(screen.getByTestId('shimmer'))).toBe(true);
+    expect(
+      isHiddenFromAccessibility(screen.getByTestId('shimmer', { includeHiddenElements: true })),
+    ).toBe(true);
   });
 });

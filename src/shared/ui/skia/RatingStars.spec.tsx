@@ -35,6 +35,8 @@ describe('RatingStars', () => {
 
   it('[SH-01] StarIcon is decorative', async () => {
     await render(<StarIcon testID="star" />);
-    expect(isHiddenFromAccessibility(screen.getByTestId('star'))).toBe(true);
+    expect(
+      isHiddenFromAccessibility(screen.getByTestId('star', { includeHiddenElements: true })),
+    ).toBe(true);
   });
 });
