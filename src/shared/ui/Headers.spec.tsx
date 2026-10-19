@@ -22,4 +22,12 @@ describe('headers', () => {
     await renderWithProviders(<SectionHeader title="Reviews" />);
     expect(screen.getByRole('header', { name: 'Reviews' })).toBeOnTheScreen();
   });
+
+  it('[SH-10] SectionHeader caption fills the remaining width on one line', async () => {
+    // Its width must not depend on re-measuring its own text when the count changes.
+    await renderWithProviders(<SectionHeader title="Products" caption="Showing 20 of 194" />);
+    const caption = screen.getByText('Showing 20 of 194');
+    expect(caption).toHaveProp('numberOfLines', 1);
+    expect(caption).toHaveStyle({ flex: 1, textAlign: 'right' });
+  });
 });
