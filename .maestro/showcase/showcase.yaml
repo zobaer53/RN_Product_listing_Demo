@@ -80,25 +80,38 @@ name: Showcase
 - waitForAnimationToEnd:
     timeout: 2000
 
-# Offline-first (Android: airplane mode is scriptable on a device): relaunch with the
-# encrypted cache, see the offline banner, then reconnect.
+# Offline-first (Android: airplane mode is scriptable on a device): connectivity drops
+# while browsing, the cached list stays usable with the offline banner, then reconnects.
 - runFlow:
     when:
       platform: Android
     commands:
       - setAirplaneMode: enabled
-      - stopApp
-      - launchApp:
-          clearState: false
       - extendedWaitUntil:
           visible:
             id: 'offline-banner'
           timeout: 15000
       - waitForAnimationToEnd:
           timeout: 3000
-      - scroll
+      # Re-open the product viewed earlier: its details come from the encrypted cache.
+      - scrollUntilVisible:
+          element:
+            id: 'product-card-12'
+          direction: DOWN
+          speed: 30
       - waitForAnimationToEnd:
           timeout: 2000
+      - tapOn:
+          id: 'product-card-12'
+      - extendedWaitUntil:
+          visible:
+            id: 'details-title'
+          timeout: 10000
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - tapOn:
+          id: 'details-back'
+      - waitForAnimationToEnd
       - setAirplaneMode: disabled
       - extendedWaitUntil:
           notVisible:

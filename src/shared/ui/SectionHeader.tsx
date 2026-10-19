@@ -17,7 +17,7 @@ export function SectionHeader({ title, caption, style }: SectionHeaderProps) {
         {title}
       </Text>
       {caption ? (
-        <Text style={styles.caption} maxFontSizeMultiplier={MAX_FONT_SCALE}>
+        <Text style={styles.caption} numberOfLines={1} maxFontSizeMultiplier={MAX_FONT_SCALE}>
           {caption}
         </Text>
       ) : null}
@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   title: typography.sectionTitle,
-  caption: typography.caption,
+  // Fills the space after the title, so a changing count never wraps onto a clipped line.
+  caption: { ...typography.caption, flex: 1, textAlign: 'right' },
 });
