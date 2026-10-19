@@ -107,7 +107,13 @@ describe('createHttpClient', () => {
 
     expect((await rejectionOf(failing.get('/items/1'))).kind).toBe('network');
     expect(isAllowedBaseUrl('https://dummyjson.com', false)).toBe(true);
-    expect(isAllowedBaseUrl('http://10.0.2.2:4010', false)).toBe(false);
-    expect(isAllowedBaseUrl('http://10.0.2.2:4010', true)).toBe(true);
+    expect(isAllowedBaseUrl('http://api.example.com', false)).toBe(false);
+    expect(isAllowedBaseUrl('http://api.example.com', true)).toBe(true);
+    // The local mock API (emulator / simulator loopback) stays reachable from E2E builds.
+    expect(isAllowedBaseUrl('http://10.0.2.2:4010', false)).toBe(true);
+    expect(isAllowedBaseUrl('http://localhost:4010', false)).toBe(true);
+    expect(() =>
+      createHttpClient({ baseUrl: 'http://api.example.com', timeoutMs: 1, allowInsecure: false }),
+    ).toThrow(/HTTPS/);
   });
 });
