@@ -2,6 +2,7 @@ import { createMMKV, deleteMMKV, existsMMKV } from 'react-native-mmkv';
 
 import { getOrCreateEncryptionKey } from '../security/encryption-key';
 import type { KeyValueStorage } from './key-value-storage';
+import { createMemoryStorage } from './memory-storage';
 
 /** MMKV instance id of the offline query cache. */
 export const CACHE_STORAGE_ID = 'product-explorer.cache';
@@ -27,20 +28,6 @@ export const createEncryptedStorage = ({
     setItem: (name, value) => mmkv.set(name, value),
     removeItem: (name) => {
       mmkv.remove(name);
-    },
-  };
-};
-
-/** Volatile store used when encryption is unavailable: nothing touches the disk. */
-export const createMemoryStorage = (): KeyValueStorage => {
-  const values = new Map<string, string>();
-  return {
-    getItem: (name) => values.get(name) ?? null,
-    setItem: (name, value) => {
-      values.set(name, value);
-    },
-    removeItem: (name) => {
-      values.delete(name);
     },
   };
 };

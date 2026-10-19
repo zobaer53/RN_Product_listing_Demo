@@ -6,7 +6,7 @@ import { QueryClient } from '@tanstack/react-query';
 
 import { AppError } from '@core/errors/app-error';
 
-import { createMemoryStorage } from '../storage/encrypted-storage';
+import { createMemoryStorage } from '../storage/memory-storage';
 import type { KeyValueStorage } from '../storage/key-value-storage';
 import { createPersistOptions, persistOptions, QUERY_CACHE_KEY } from './query-persister';
 
@@ -17,7 +17,8 @@ const infiniteData = {
   pageParams: [0],
 };
 
-const newClient = () => new QueryClient({ defaultOptions: { queries: { retry: false } } });
+const newClient = () =>
+  new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: Infinity } } });
 
 const save = (queryClient: QueryClient, storage: KeyValueStorage) =>
   persistQueryClientSave({ queryClient, ...createPersistOptions(storage) });

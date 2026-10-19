@@ -4,9 +4,9 @@ import { getOrCreateEncryptionKey } from '../security/encryption-key';
 import {
   CACHE_STORAGE_ID,
   createEncryptedStorage,
-  createMemoryStorage,
   openSecureCacheStorage,
 } from './encrypted-storage';
+import { createMemoryStorage } from './memory-storage';
 
 jest.mock('react-native-mmkv', () => {
   const createFakeMMKV = () => {
