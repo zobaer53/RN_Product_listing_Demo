@@ -99,7 +99,7 @@ GET /products?limit=10&skip=190&select=…  → items 191–194 → "You've seen
 | Lists                | **FlashList v2**                                               | Recycled, fast 2-column infinite grid                                                                                            |
 | Unit and integration | **Jest + React Native Testing Library + MSW**                  | Spec tests from pure domain helpers to whole screens, with the network mocked at the HTTP layer                                  |
 | End-to-end           | **Maestro**                                                    | Readable YAML flows on real devices, emulators and simulators                                                                    |
-| CI/CD                | **GitHub Actions**                                             | Verify on every push and PR, signed debug APK and Maestro smoke tests on `main`                                                  |
+| CI/CD                | **GitHub Actions**                                             | Verify on every push and PR, signed debug APK published as a release on `main`                                                   |
 
 All native dependencies are installed with `npx expo install`, so versions match the SDK.
 
@@ -231,7 +231,7 @@ Verification scripts live in [`scripts/security`](scripts/security/README.md): `
 | E2E-12 | Deep link to an unknown id → not found → back           | `states`, `mock`          |
 | E2E-13 | iOS offline approximation (mock server unavailable)     | `offline`, `ios`, `mock`  |
 
-**Results:** all 12 Android flows pass on a **real Pixel 6a**, and all 11 iOS-applicable flows pass on the iPhone 17 Pro simulator. CI runs the `smoke` flows on an Android emulator for every push to `main`.
+**Results:** all 12 Android flows pass on a **real Pixel 6a**, and all 11 iOS-applicable flows pass on the iPhone 17 Pro simulator. Maestro runs locally (`npm run e2e`); CI does not run an emulator, which keeps the APK pipeline fast.
 
 **Run them**
 
@@ -254,14 +254,14 @@ EXPO_PUBLIC_API_BASE_URL=http://localhost:4010 npx expo run:android --device
 maestro --device <serial> test .maestro/flows
 ```
 
-Run `adb reverse` again after reconnecting the phone. The iOS simulator shares the host network, so `http://localhost:4010` works as is. CI uses an Android emulator.
+Run `adb reverse` again after reconnecting the phone. The iOS simulator shares the host network, so `http://localhost:4010` works as is.
 
 ## CI/CD
 
-| Workflow                                                   | Trigger                     | Jobs                                                                                                                                                              | Artifacts                                                        |
-| ---------------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [`ci.yml`](.github/workflows/ci.yml)                       | Every push and pull request | Lint → format check → typecheck → Jest with coverage                                                                                                              | Coverage report                                                  |
-| [`android-debug.yml`](.github/workflows/android-debug.yml) | Push to `main`, manual      | Verify → `expo prebuild` → `assembleDebug` with the JS bundle embedded → `apksigner verify` → `allowBackup` check → GitHub release → Maestro smoke on an emulator | Release `build-<n>`, `android-debug-apk`, `maestro-smoke-report` |
+| Workflow                                                   | Trigger                     | Jobs                                                                                                                               | Artifacts                                |
+| ---------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| [`ci.yml`](.github/workflows/ci.yml)                       | Every push and pull request | Lint → format check → typecheck → Jest with coverage                                                                               | Coverage report                          |
+| [`android-debug.yml`](.github/workflows/android-debug.yml) | Push to `main`, manual      | Verify → `expo prebuild` → `assembleDebug` with the JS bundle embedded → `apksigner verify` → `allowBackup` check → GitHub release | Release `build-<n>`, `android-debug-apk` |
 
 **Signing.** The APK is always signed. To get a **stable** signature, so testers can update in place across builds, add these repository secrets:
 
