@@ -1,0 +1,127 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Essence Mascara Lash Princess",
+            "brand": "Essence",
+            "category": "beauty",
+            "price": 9.99,
+            "discountPercentage": 10.48,
+            "rating": 2.56,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+            "stock": 99,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 2,
+            "title": "Eyeshadow Palette with Mirror",
+            "brand": "Glamour Beauty",
+            "category": "beauty",
+            "price": 19.99,
+            "discountPercentage": 18.19,
+            "rating": 2.86,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp",
+            "stock": 34,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 3,
+            "title": "Powder Canister",
+            "brand": "Velvet Touch",
+            "category": "beauty",
+            "price": 14.99,
+            "discountPercentage": 9.84,
+            "rating": 4.64,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp",
+            "stock": 89,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 4,
+            "title": "Red Lipstick",
+            "brand": "Chic Cosmetics",
+            "category": "beauty",
+            "price": 12.99,
+            "discountPercentage": 12.16,
+            "rating": 4.36,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp",
+            "stock": 91,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 5,
+            "title": "Red Nail Polish",
+            "brand": "Nail Couture",
+            "category": "beauty",
+            "price": 8.99,
+            "discountPercentage": 11.44,
+            "rating": 4.32,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/thumbnail.webp",
+            "stock": 79,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 6,
+            "title": "Calvin Klein CK One",
+            "brand": "Calvin Klein",
+            "category": "fragrances",
+            "price": 49.99,
+            "discountPercentage": 1.89,
+            "rating": 4.37,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp",
+            "stock": 29,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 7,
+            "title": "Chanel Coco Noir Eau De",
+            "brand": "Chanel",
+            "category": "fragrances",
+            "price": 129.99,
+            "discountPercentage": 16.51,
+            "rating": 4.26,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/thumbnail.webp",
+            "stock": 58,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 8,
+            "title": "Dior J'adore",
+            "brand": "Dior",
+            "category": "fragrances",
+            "price": 89.99,
+            "discountPercentage": 14.72,
+            "rating": 3.8,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp",
+            "stock": 98,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 9,
+            "title": "Dolce Shine Eau de",
+            "brand": "Dolce & Gabbana",
+            "category": "fragrances",
+            "price": 69.99,
+            "discountPercentage": 0.62,
+            "rating": 3.96,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp",
+            "stock": 4,
+            "availabilityStatus": "Low Stock"
+        },
+        {
+            "id": 10,
+            "title": "Gucci Bloom Eau de",
+            "brand": "Gucci",
+            "category": "fragrances",
+            "price": 79.99,
+            "discountPercentage": 14.39,
+            "rating": 2.74,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/thumbnail.webp",
+            "stock": 91,
+            "availabilityStatus": "In Stock"
+        }
+    ],
+    "total": 194,
+    "skip": 0,
+    "limit": 10
+}

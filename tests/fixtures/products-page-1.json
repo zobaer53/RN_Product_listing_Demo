@@ -1,0 +1,122 @@
+{
+    "products": [
+        {
+            "id": 11,
+            "title": "Annibale Colombo Bed",
+            "brand": "Annibale Colombo",
+            "category": "furniture",
+            "price": 1899.99,
+            "discountPercentage": 8.57,
+            "rating": 4.77,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/thumbnail.webp",
+            "stock": 88,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 12,
+            "title": "Annibale Colombo Sofa",
+            "brand": "Annibale Colombo",
+            "category": "furniture",
+            "price": 2499.99,
+            "discountPercentage": 14.4,
+            "rating": 3.92,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/thumbnail.webp",
+            "stock": 60,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 13,
+            "title": "Bedside Table African Cherry",
+            "brand": "Furniture Co.",
+            "category": "furniture",
+            "price": 299.99,
+            "discountPercentage": 19.09,
+            "rating": 2.87,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp",
+            "stock": 64,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 14,
+            "title": "Knoll Saarinen Executive Conference Chair",
+            "brand": "Knoll",
+            "category": "furniture",
+            "price": 499.99,
+            "discountPercentage": 2.01,
+            "rating": 4.88,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/thumbnail.webp",
+            "stock": 26,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 15,
+            "title": "Wooden Bathroom Sink With Mirror",
+            "brand": "Bath Trends",
+            "category": "furniture",
+            "price": 799.99,
+            "discountPercentage": 8.8,
+            "rating": 3.59,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/thumbnail.webp",
+            "stock": 7,
+            "availabilityStatus": "Low Stock"
+        },
+        {
+            "id": 16,
+            "title": "Apple",
+            "category": "groceries",
+            "price": 1.99,
+            "discountPercentage": 12.62,
+            "rating": 4.19,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp",
+            "stock": 8,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 17,
+            "title": "Beef Steak",
+            "category": "groceries",
+            "price": 12.99,
+            "discountPercentage": 9.61,
+            "rating": 4.47,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/beef-steak/thumbnail.webp",
+            "stock": 86,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 18,
+            "title": "Cat Food",
+            "category": "groceries",
+            "price": 8.99,
+            "discountPercentage": 9.58,
+            "rating": 3.13,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cat-food/thumbnail.webp",
+            "stock": 46,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 19,
+            "title": "Chicken Meat",
+            "category": "groceries",
+            "price": 9.99,
+            "discountPercentage": 13.7,
+            "rating": 3.19,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/chicken-meat/thumbnail.webp",
+            "stock": 97,
+            "availabilityStatus": "In Stock"
+        },
+        {
+            "id": 20,
+            "title": "Cooking Oil",
+            "category": "groceries",
+            "price": 4.99,
+            "discountPercentage": 9.33,
+            "rating": 4.8,
+            "thumbnail": "https://cdn.dummyjson.com/product-images/groceries/cooking-oil/thumbnail.webp",
+            "stock": 10,
+            "availabilityStatus": "In Stock"
+        }
+    ],
+    "total": 194,
+    "skip": 10,
+    "limit": 10
+}

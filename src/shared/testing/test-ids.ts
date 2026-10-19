@@ -1,0 +1,32 @@
+/**
+ * Single source of truth for testIDs. Unit tests and Maestro flows both rely on these
+ * values, so treat a change here as a breaking change.
+ */
+export const TestIds = {
+  productList: 'product-list',
+  productCard: (id: number) => `product-card-${id}`,
+  stateLoading: 'state-loading',
+  stateEmpty: 'state-empty',
+  stateError: 'state-error',
+  stateErrorRetry: 'state-error-retry',
+  stateOffline: 'state-offline',
+  stateNotFound: 'state-not-found',
+  stateNotFoundBack: 'state-not-found-back',
+  offlineBanner: 'offline-banner',
+  listFooterLoading: 'list-footer-loading',
+  listFooterError: 'list-footer-error',
+  listFooterRetry: 'list-footer-retry',
+  listFooterOffline: 'list-footer-offline',
+  listFooterEnd: 'list-footer-end',
+  snackbarRefreshError: 'snackbar-refresh-error',
+  productDetails: 'product-details',
+  detailsBack: 'details-back',
+  detailsCarousel: 'details-carousel',
+  detailsTitle: 'details-title',
+  detailsPrice: 'details-price',
+  detailsRating: 'details-rating',
+  detailsAvailability: 'details-availability',
+  detailsDescription: 'details-description',
+  detailsSpecs: 'details-specs',
+  detailsReviews: 'details-reviews',
+} as const;

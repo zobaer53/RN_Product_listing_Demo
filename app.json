@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Product Explorer",
+    "slug": "product-explorer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "productexplorer",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "com.zobaer53.productexplorer",
+      "supportsTablet": false,
+      "icon": "./assets/expo.icon"
+    },
+    "android": {
+      "package": "com.zobaer53.productexplorer",
+      "allowBackup": false,
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
