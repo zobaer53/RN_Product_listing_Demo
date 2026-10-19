@@ -31,4 +31,5 @@ export const TestIds = {
   detailsSpecs: 'details-specs',
   detailsReviews: 'details-reviews',
   detailsSkeleton: 'details-skeleton',
+  detailsStatusScrim: 'details-status-scrim',
 } as const;

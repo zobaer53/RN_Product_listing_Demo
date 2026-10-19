@@ -162,4 +162,10 @@ describe('ProductDetailsView', () => {
     await user.press(back);
     expect(onBack).toHaveBeenCalledTimes(1);
   });
+
+  it('[DET-11] keeps scrolled content out from under the status bar', async () => {
+    await renderWithProviders(<ProductDetailsView {...loaded()} />);
+    // TestProviders uses a 47pt top inset.
+    expect(screen.getByTestId(TestIds.detailsStatusScrim)).toHaveStyle({ height: 47 });
+  });
 });
