@@ -43,11 +43,13 @@ describe('useProductsInfinite', () => {
     const { result } = await renderProducts();
     await waitFor(() => expect(result.current.status).toBe('success'));
 
-    await act(() => result.current.fetchNextPage());
-    expect(result.current.data?.products).toHaveLength(20);
+    // Not wrapped in act: TanStack notifies observers on a later macrotask; waitFor polls for it.
+    void result.current.fetchNextPage();
+    await waitFor(() => expect(result.current.data?.products).toHaveLength(20));
     expect(result.current.hasNextPage).toBe(true);
 
-    await act(() => result.current.fetchNextPage());
+    void result.current.fetchNextPage();
+    await waitFor(() => expect(result.current.hasNextPage).toBe(false));
     expect(result.current.data?.products.map((product) => product.id)).toEqual(
       Array.from({ length: 25 }, (_, index) => index + 1),
     );
@@ -68,7 +70,8 @@ describe('useProductsInfinite', () => {
     const { result } = await renderProducts();
     await waitFor(() => expect(result.current.status).toBe('success'));
 
-    await act(() => result.current.fetchNextPage());
+    void result.current.fetchNextPage();
+    await waitFor(() => expect(result.current.data?.products.length).toBeGreaterThan(10));
 
     const ids = result.current.data?.products.map((product) => product.id) ?? [];
     expect(ids).toHaveLength(17);

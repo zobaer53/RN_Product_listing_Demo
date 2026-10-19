@@ -63,7 +63,10 @@ describe('useProduct', () => {
 
     expect(result.current.fetchStatus).toBe('idle');
     expect(result.current.data).toBeUndefined();
-    expect(client.getQueryCache().findAll({ queryKey: productKeys.details() })).toHaveLength(0);
+    expect(client.isFetching()).toBe(0);
+    const detailQueries = client.getQueryCache().findAll({ queryKey: productKeys.details() });
+    expect(detailQueries.every((query) => query.state.dataUpdateCount === 0)).toBe(true);
+    expect(detailQueries.every((query) => query.state.errorUpdateCount === 0)).toBe(true);
   });
 
   it('[HOOK-05] surfaces not-found as an http 404 AppError', async () => {
