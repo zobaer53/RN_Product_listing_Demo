@@ -131,6 +131,12 @@ export function ProductDetailsView({
   return (
     <View style={styles.screen} testID={TestIds.productDetails}>
       <View style={[styles.body, !product && { paddingTop: insets.top }]}>{renderBody()}</View>
+      {/* Opaque status bar area so scrolled content never sits under the clock. */}
+      <View
+        testID={TestIds.detailsStatusScrim}
+        style={[styles.statusScrim, { height: insets.top }]}
+        pointerEvents="none"
+      />
       {hasOwnBackAction ? null : <BackButton onPress={onBack} top={insets.top} />}
     </View>
   );
@@ -139,6 +145,13 @@ export function ProductDetailsView({
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   body: { flex: 1 },
+  statusScrim: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: colors.background,
+  },
   back: {
     position: 'absolute',
     left: spacing.lg,
