@@ -42,12 +42,11 @@ The videos are reproducible: a script sets clean status bars, records each devic
 
 ## Download the debug APK
 
-Every push to `main` runs the [Android debug APK workflow](https://github.com/zobaer53/RN_Product_listing_Demo/actions/workflows/android-debug.yml). It builds a **signed, standalone debug APK** with the JavaScript bundle embedded, so no Metro server is needed.
+Every push to `main` runs the [Android debug APK workflow](https://github.com/zobaer53/RN_Product_listing_Demo/actions/workflows/android-debug.yml). It builds a **signed, standalone debug APK** with the JavaScript bundle embedded, so no Metro server is needed, and publishes it as a GitHub release.
 
-1. Open the latest successful run of **Android debug APK** in the Actions tab.
-2. Download the `android-debug-apk` artifact (a zip containing `product-explorer-debug-<sha>.apk`). You need to be signed in to GitHub.
-3. Install it:
-   - **adb:** `adb install -r product-explorer-debug-<sha>.apk`
+1. Download **[product-explorer-debug.apk](https://github.com/zobaer53/RN_Product_listing_Demo/releases/latest/download/product-explorer-debug.apk)** from the [latest release](https://github.com/zobaer53/RN_Product_listing_Demo/releases/latest). No GitHub sign-in needed.
+2. Install it:
+   - **adb:** `adb install -r product-explorer-debug.apk`
    - **Sideload:** copy the APK to the phone, open it, and allow "Install unknown apps" for your file manager when prompted.
 
 > If the APK was signed with the default debug key (see [CI/CD](#cicd)), uninstall any previous build before installing a new one.
@@ -259,10 +258,10 @@ Run `adb reverse` again after reconnecting the phone. The iOS simulator shares t
 
 ## CI/CD
 
-| Workflow                                                   | Trigger                     | Jobs                                                                                                                                             | Artifacts                                   |
-| ---------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| [`ci.yml`](.github/workflows/ci.yml)                       | Every push and pull request | Lint → format check → typecheck → Jest with coverage                                                                                             | Coverage report                             |
-| [`android-debug.yml`](.github/workflows/android-debug.yml) | Push to `main`, manual      | Verify → `expo prebuild` → `assembleDebug` with the JS bundle embedded → `apksigner verify` → `allowBackup` check → Maestro smoke on an emulator | `android-debug-apk`, `maestro-smoke-report` |
+| Workflow                                                   | Trigger                     | Jobs                                                                                                                                                              | Artifacts                                                        |
+| ---------------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`ci.yml`](.github/workflows/ci.yml)                       | Every push and pull request | Lint → format check → typecheck → Jest with coverage                                                                                                              | Coverage report                                                  |
+| [`android-debug.yml`](.github/workflows/android-debug.yml) | Push to `main`, manual      | Verify → `expo prebuild` → `assembleDebug` with the JS bundle embedded → `apksigner verify` → `allowBackup` check → GitHub release → Maestro smoke on an emulator | Release `build-<n>`, `android-debug-apk`, `maestro-smoke-report` |
 
 **Signing.** The APK is always signed. To get a **stable** signature, so testers can update in place across builds, add these repository secrets:
 

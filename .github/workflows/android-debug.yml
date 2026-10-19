@@ -105,6 +105,32 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  release:
+    name: Publish the APK as a GitHub release
+    needs: android-debug
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-debug-apk
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: build-${{ github.run_number }}
+        run: |
+          # A stable file name keeps releases/latest/download/product-explorer-debug.apk working.
+          mv "$APK_NAME" product-explorer-debug.apk
+          gh release create "$TAG" product-explorer-debug.apk \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Product Explorer debug build #${{ github.run_number }}" \
+            --latest \
+            --notes "Standalone debug APK (JS bundle embedded, no Metro needed) built from ${GITHUB_SHA::7}. Signed and checked with apksigner. ABIs: arm64-v8a (phones) and x86_64 (emulators). Install with \`adb install -r product-explorer-debug.apk\` or sideload it."
+
   e2e-android-smoke:
     name: Maestro smoke on Android emulator
     needs: android-debug
