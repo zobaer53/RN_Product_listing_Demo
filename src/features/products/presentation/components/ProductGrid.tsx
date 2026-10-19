@@ -56,15 +56,16 @@ export function ProductGrid({
       numColumns={COLUMNS}
       onEndReached={onEndReached}
       onEndReachedThreshold={END_REACHED_THRESHOLD}
+      // Always mounted and toggled with `enabled`: adding or removing the control recreates
+      // the native scroll view on Android, which resets the scroll position.
       refreshControl={
-        refreshEnabled ? (
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={onRefresh}
-            colors={[colors.primary]}
-            tintColor={colors.primary}
-          />
-        ) : undefined
+        <RefreshControl
+          enabled={refreshEnabled}
+          refreshing={isRefreshing}
+          onRefresh={refreshEnabled ? onRefresh : undefined}
+          colors={[colors.primary]}
+          tintColor={colors.primary}
+        />
       }
       ListHeaderComponent={header}
       ListFooterComponent={footer}

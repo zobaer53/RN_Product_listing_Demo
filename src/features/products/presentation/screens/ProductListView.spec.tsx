@@ -124,14 +124,14 @@ describe('ProductListView', () => {
       "You're offline · showing data from 5 min ago",
     );
     expect(screen.getByTestId(TestIds.productCard(1))).toBeOnTheScreen();
-    expect(screen.getByTestId(TestIds.productList).props.refreshControl).toBeUndefined();
+    expect(screen.getByTestId(TestIds.productList).props.refreshControl.props.enabled).toBe(false);
     expect(screen.getByTestId(TestIds.listFooterOffline)).toBeOnTheScreen();
   });
 
   it('[LIST-08] hides the offline banner when online', async () => {
     await renderWithProviders(<ProductListView {...loaded()} />);
     expect(screen.queryByTestId(TestIds.offlineBanner)).not.toBeOnTheScreen();
-    expect(screen.getByTestId(TestIds.productList).props.refreshControl).toBeDefined();
+    expect(screen.getByTestId(TestIds.productList).props.refreshControl.props.enabled).toBe(true);
   });
 
   it.each(['pending', 'error'] as const)(
