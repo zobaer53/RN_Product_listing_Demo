@@ -12,14 +12,14 @@ Small, dependency-free scripts that verify the security properties described in 
 Needs a **debug** build installed on a connected emulator or device (it uses `adb shell run-as`), and the app must have loaded data at least once so the cache file exists.
 
 ```sh
-# Defaults: package com.zobaer53.productexplorer, MMKV id query-cache
+# Defaults: package com.zobaer53.productexplorer, MMKV id product-explorer.cache
 scripts/security/check-mmkv-encrypted.sh
 
 # Pick a device, another MMKV id, or keep the pulled copy for inspection
-scripts/security/check-mmkv-encrypted.sh --serial emulator-5554 --id query-cache --keep
+scripts/security/check-mmkv-encrypted.sh --serial emulator-5554 --id product-explorer.cache --keep
 
 # Check a file you already have
-scripts/security/check-mmkv-encrypted.sh --file ./query-cache
+scripts/security/check-mmkv-encrypted.sh --file ./product-explorer.cache
 ```
 
 How it works:

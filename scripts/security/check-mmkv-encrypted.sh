@@ -12,7 +12,7 @@ via `run-as`) and fails if it is missing, empty, or contains readable plaintext.
 Options:
   -s, --serial SERIAL   adb device serial            (env: ANDROID_SERIAL)
   -p, --package ID      application id               (env: APP_ID, default: com.zobaer53.productexplorer)
-  -i, --id MMKV_ID      MMKV instance id             (env: MMKV_ID, default: query-cache)
+  -i, --id MMKV_ID      MMKV instance id             (env: MMKV_ID, default: product-explorer.cache)
   -f, --file PATH       check a local file instead of pulling from a device
   -k, --keep            keep the pulled copy and print its path
   -h, --help            show this help
@@ -25,7 +25,7 @@ EOF
 }
 
 APP_ID="${APP_ID:-com.zobaer53.productexplorer}"
-MMKV_ID="${MMKV_ID:-query-cache}"
+MMKV_ID="${MMKV_ID:-product-explorer.cache}"
 MARKERS="${MARKERS:-\"title\" dummyjson products @x.dummyjson.com reviewerName}"
 LOCAL_FILE=""
 KEEP=0
