@@ -9,6 +9,14 @@ jest.mock(
   () => jest.requireActual<typeof import('./skia-mock')>('./skia-mock').skiaMock,
 );
 
+// Icon fonts are bundled assets that the Jest asset registry cannot load.
+jest.mock('expo-font', () => ({
+  ...jest.requireActual<object>('expo-font'),
+  isLoaded: jest.fn(() => true),
+  loadAsync: jest.fn(() => Promise.resolve()),
+  useFonts: jest.fn(() => [true, null]),
+}));
+
 jest.mock(
   'react-native-safe-area-context',
   () => jest.requireActual<{ default: object }>('react-native-safe-area-context/jest/mock').default,
