@@ -11,7 +11,9 @@ describe('test harness', () => {
   });
 
   it('supports per-test overrides', async () => {
-    server.use(http.get('https://dummyjson.com/products/:id', () => HttpResponse.json({}, { status: 500 })));
+    server.use(
+      http.get('https://dummyjson.com/products/:id', () => HttpResponse.json({}, { status: 500 })),
+    );
     const response = await fetch('https://dummyjson.com/products/1');
     expect(response.status).toBe(500);
   });

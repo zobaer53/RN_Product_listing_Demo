@@ -1,55 +1,55 @@
 {
-    "products": [
-        {
-            "id": 191,
-            "title": "Rolex Cellini Moonphase",
-            "brand": "Rolex",
-            "category": "womens-watches",
-            "price": 15999.99,
-            "discountPercentage": 4.11,
-            "rating": 3.83,
-            "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-cellini-moonphase/thumbnail.webp",
-            "stock": 52,
-            "availabilityStatus": "In Stock"
-        },
-        {
-            "id": 192,
-            "title": "Rolex Datejust Women",
-            "brand": "Rolex",
-            "category": "womens-watches",
-            "price": 10999.99,
-            "discountPercentage": 15.94,
-            "rating": 2.86,
-            "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-datejust-women/thumbnail.webp",
-            "stock": 4,
-            "availabilityStatus": "Low Stock"
-        },
-        {
-            "id": 193,
-            "title": "Watch Gold for Women",
-            "brand": "Fashion Gold",
-            "category": "womens-watches",
-            "price": 799.99,
-            "discountPercentage": 18.34,
-            "rating": 4.24,
-            "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/watch-gold-for-women/thumbnail.webp",
-            "stock": 0,
-            "availabilityStatus": "Out of Stock"
-        },
-        {
-            "id": 194,
-            "title": "Women's Wrist Watch",
-            "brand": "Fashion Co.",
-            "category": "womens-watches",
-            "price": 129.99,
-            "discountPercentage": 12.6,
-            "rating": 3.52,
-            "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/women's-wrist-watch/thumbnail.webp",
-            "stock": 12,
-            "availabilityStatus": "In Stock"
-        }
-    ],
-    "total": 194,
-    "skip": 190,
-    "limit": 4
+  "products": [
+    {
+      "id": 191,
+      "title": "Rolex Cellini Moonphase",
+      "brand": "Rolex",
+      "category": "womens-watches",
+      "price": 15999.99,
+      "discountPercentage": 4.11,
+      "rating": 3.83,
+      "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-cellini-moonphase/thumbnail.webp",
+      "stock": 52,
+      "availabilityStatus": "In Stock"
+    },
+    {
+      "id": 192,
+      "title": "Rolex Datejust Women",
+      "brand": "Rolex",
+      "category": "womens-watches",
+      "price": 10999.99,
+      "discountPercentage": 15.94,
+      "rating": 2.86,
+      "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/rolex-datejust-women/thumbnail.webp",
+      "stock": 4,
+      "availabilityStatus": "Low Stock"
+    },
+    {
+      "id": 193,
+      "title": "Watch Gold for Women",
+      "brand": "Fashion Gold",
+      "category": "womens-watches",
+      "price": 799.99,
+      "discountPercentage": 18.34,
+      "rating": 4.24,
+      "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/watch-gold-for-women/thumbnail.webp",
+      "stock": 0,
+      "availabilityStatus": "Out of Stock"
+    },
+    {
+      "id": 194,
+      "title": "Women's Wrist Watch",
+      "brand": "Fashion Co.",
+      "category": "womens-watches",
+      "price": 129.99,
+      "discountPercentage": 12.6,
+      "rating": 3.52,
+      "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/women's-wrist-watch/thumbnail.webp",
+      "stock": 12,
+      "availabilityStatus": "In Stock"
+    }
+  ],
+  "total": 194,
+  "skip": 190,
+  "limit": 4
 }

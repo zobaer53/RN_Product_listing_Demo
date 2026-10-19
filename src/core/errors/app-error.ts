@@ -3,14 +3,7 @@
  * validation) is normalised into an AppError so the UI can switch on `kind`.
  */
 export type AppErrorKind =
-  | 'offline'
-  | 'timeout'
-  | 'network'
-  | 'http'
-  | 'parse'
-  | 'validation'
-  | 'cancelled'
-  | 'unknown';
+  'offline' | 'timeout' | 'network' | 'http' | 'parse' | 'validation' | 'cancelled' | 'unknown';
 
 export interface AppErrorOptions {
   status?: number;

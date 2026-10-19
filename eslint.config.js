@@ -5,10 +5,13 @@ const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const prettierConfig = require('eslint-config-prettier');
 const testingLibrary = require('eslint-plugin-testing-library');
+const globals = require('globals');
 
 const featuresDir = path.join(__dirname, 'src/features');
 const features = fs.existsSync(featuresDir)
-  ? fs.readdirSync(featuresDir).filter((name) => fs.statSync(path.join(featuresDir, name)).isDirectory())
+  ? fs
+      .readdirSync(featuresDir)
+      .filter((name) => fs.statSync(path.join(featuresDir, name)).isDirectory())
   : [];
 
 /**
@@ -104,6 +107,16 @@ module.exports = defineConfig([
         },
       ],
     },
+  },
+  {
+    files: [
+      '*.config.js',
+      'tests/setup/*.js',
+      'plugins/**/*.js',
+      'e2e/**/*.{js,mjs}',
+      'scripts/**/*.{js,mjs}',
+    ],
+    languageOptions: { globals: globals.node },
   },
   {
     files: ['**/*.spec.ts', '**/*.spec.tsx'],

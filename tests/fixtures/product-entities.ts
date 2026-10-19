@@ -9,7 +9,8 @@ export const makeProductSummary = (overrides: Partial<ProductSummary> = {}): Pro
   price: 9.99,
   discountPercentage: 10.48,
   rating: 2.56,
-  thumbnailUrl: 'https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp',
+  thumbnailUrl:
+    'https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp',
   stock: 99,
   availability: 'in_stock',
   ...overrides,
@@ -19,9 +20,7 @@ export const makeProduct = (overrides: Partial<Product> = {}): Product => ({
   ...makeProductSummary(),
   description:
     'The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects.',
-  images: [
-    'https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp',
-  ],
+  images: ['https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp'],
   tags: ['beauty', 'mascara'],
   sku: 'BEA-ESS-ESS-001',
   weight: 4,
@@ -31,8 +30,18 @@ export const makeProduct = (overrides: Partial<Product> = {}): Product => ({
   returnPolicy: 'No return policy',
   minimumOrderQuantity: 48,
   reviews: [
-    { rating: 3, comment: 'Would not recommend!', date: '2025-04-30T09:41:02.053Z', reviewerName: 'Eleanor Collins' },
-    { rating: 4, comment: 'Very satisfied!', date: '2025-04-30T09:41:02.053Z', reviewerName: 'Lucas Gordon' },
+    {
+      rating: 3,
+      comment: 'Would not recommend!',
+      date: '2025-04-30T09:41:02.053Z',
+      reviewerName: 'Eleanor Collins',
+    },
+    {
+      rating: 4,
+      comment: 'Very satisfied!',
+      date: '2025-04-30T09:41:02.053Z',
+      reviewerName: 'Lucas Gordon',
+    },
   ],
   ...overrides,
 });

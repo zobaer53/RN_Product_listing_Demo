@@ -14,10 +14,15 @@ export const handlers = [
   http.get(`${API_BASE_URL}/products`, ({ request }) => {
     const skip = Number(new URL(request.url).searchParams.get('skip') ?? 0);
     const page = pagesBySkip[skip];
-    return page ? HttpResponse.json(page) : HttpResponse.json({ products: [], total: 194, skip, limit: 10 });
+    return page
+      ? HttpResponse.json(page)
+      : HttpResponse.json({ products: [], total: 194, skip, limit: 10 });
   }),
   http.get(`${API_BASE_URL}/products/:id`, ({ params }) => {
     if (params.id === '1') return HttpResponse.json(product1);
-    return HttpResponse.json({ message: `Product with id '${String(params.id)}' not found` }, { status: 404 });
+    return HttpResponse.json(
+      { message: `Product with id '${String(params.id)}' not found` },
+      { status: 404 },
+    );
   }),
 ];

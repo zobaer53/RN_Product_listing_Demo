@@ -1,0 +1,9 @@
+node_modules
+coverage
+android
+ios
+.expo
+.claude
+docs/local
+assets
+package-lock.json

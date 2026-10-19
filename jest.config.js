@@ -6,7 +6,10 @@ module.exports = {
     // msw v3 ships some dependencies as .mjs only
     '^.+\\.mjs$': 'babel-jest',
   },
-  setupFilesAfterEnv: ['<rootDir>/tests/setup/restore-fetch.ts', '<rootDir>/tests/setup/jest.setup.ts'],
+  setupFilesAfterEnv: [
+    '<rootDir>/tests/setup/restore-fetch.ts',
+    '<rootDir>/tests/setup/jest.setup.ts',
+  ],
   testMatch: ['<rootDir>/src/**/*.spec.ts?(x)', '<rootDir>/tests/**/*.spec.ts?(x)'],
   testPathIgnorePatterns: ['/node_modules/', '/.claude/', '/e2e/'],
   transformIgnorePatterns: [
