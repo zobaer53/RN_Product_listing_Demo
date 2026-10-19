@@ -77,3 +77,32 @@ name: Showcase
     visible:
       id: 'product-card-1'
     timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Offline-first (Android: airplane mode is scriptable on a device): relaunch with the
+# encrypted cache, see the offline banner, then reconnect.
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - setAirplaneMode: enabled
+      - stopApp
+      - launchApp:
+          clearState: false
+      - extendedWaitUntil:
+          visible:
+            id: 'offline-banner'
+          timeout: 15000
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - scroll
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - setAirplaneMode: disabled
+      - extendedWaitUntil:
+          notVisible:
+            id: 'offline-banner'
+          timeout: 30000
+      - waitForAnimationToEnd:
+          timeout: 2000
