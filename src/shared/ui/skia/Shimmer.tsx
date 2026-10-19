@@ -1,9 +1,10 @@
-import { Canvas, Fill, LinearGradient, type SkSize } from '@shopify/react-native-skia';
+import { Canvas, Fill, LinearGradient } from '@shopify/react-native-skia';
 import { useEffect } from 'react';
 import {
   StyleSheet,
   View,
   type DimensionValue,
+  type LayoutChangeEvent,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
@@ -43,7 +44,8 @@ export function Shimmer({
   testID,
 }: ShimmerProps) {
   const reduceMotion = useReducedMotion();
-  const size = useSharedValue<SkSize>({ width: 0, height: 0 });
+  // Width from onLayout: Canvas `onSize` measures every frame and warns while unmounting.
+  const blockWidth = useSharedValue(0);
   const progress = useSharedValue(0);
 
   useEffect(() => {
@@ -53,10 +55,11 @@ export function Shimmer({
   }, [progress, reduceMotion]);
 
   const start = useDerivedValue(() => {
-    const sweepWidth = size.get().width;
+    const sweepWidth = blockWidth.get();
     return { x: -sweepWidth + progress.get() * 2 * sweepWidth, y: 0 };
   });
-  const end = useDerivedValue(() => ({ x: start.get().x + size.get().width, y: 0 }));
+  const end = useDerivedValue(() => ({ x: start.get().x + blockWidth.get(), y: 0 }));
+  const onLayout = (event: LayoutChangeEvent) => blockWidth.set(event.nativeEvent.layout.width);
 
   return (
     <View
@@ -64,9 +67,10 @@ export function Shimmer({
       style={[styles.block, { width, height, borderRadius: radius }, style]}
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
+      onLayout={onLayout}
     >
       {reduceMotion ? null : (
-        <Canvas style={StyleSheet.absoluteFill} onSize={size}>
+        <Canvas style={StyleSheet.absoluteFill}>
           <Fill>
             <LinearGradient start={start} end={end} colors={[BASE, HIGHLIGHT, BASE]} />
           </Fill>
