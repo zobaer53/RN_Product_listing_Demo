@@ -1,65 +1,78 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
-import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 
 import { useConnectivityStore } from '@core/connectivity/connectivity.store';
-import { TestIds } from '@shared/testing/test-ids';
 import { TestProviders } from '@shared/testing/render-with-providers';
+import { TestIds } from '@shared/testing/test-ids';
 import { createTestQueryClient } from '@tests/utils/query-test-utils';
 
 import { ProductDetailsScreen } from './ProductDetailsScreen';
 import { ProductListScreen } from './ProductListScreen';
 
-const routes = {
-  _layout: () => <Stack screenOptions={{ headerShown: false }} />,
-  index: ProductListScreen,
-  'products/[id]': ProductDetailsScreen,
-};
+// Containers are exercised end to end (hooks → use cases → repository → HTTP → MSW); only
+// the router is replaced. Real navigation and deep links are covered by the Maestro flows.
+const mockRouter = { push: jest.fn(), back: jest.fn(), replace: jest.fn(), canGoBack: jest.fn() };
+let mockParams: Record<string, string> = {};
 
-const renderApp = (initialUrl = '/') => {
+jest.mock('expo-router', () => ({
+  useRouter: () => mockRouter,
+  useLocalSearchParams: () => mockParams,
+}));
+
+const renderScreen = (ui: React.ReactElement) => {
   const client = createTestQueryClient();
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>
       <TestProviders>{children}</TestProviders>
     </QueryClientProvider>
   );
-  return renderRouter(routes, { initialUrl, wrapper });
+  return render(ui, { wrapper });
 };
 
 describe('product screens (integration)', () => {
-  beforeEach(() => useConnectivityStore.setState({ isOnline: true }));
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockParams = {};
+    useConnectivityStore.setState({ isOnline: true });
+  });
 
   it('[INT-01] loads the first page of products from the API', async () => {
-    await renderApp();
+    await renderScreen(<ProductListScreen />);
     expect(await screen.findByTestId(TestIds.productCard(1))).toBeOnTheScreen();
     expect(screen.getByText('Essence Mascara Lash Princess')).toBeOnTheScreen();
   });
 
-  it('[INT-02] opens the details of a pressed product', async () => {
-    const router = await renderApp();
+  it('[INT-02] navigates to the details of a pressed product', async () => {
+    await renderScreen(<ProductListScreen />);
     fireEvent.press(await screen.findByTestId(TestIds.productCard(1)));
-    expect(router.getPathname()).toBe('/products/1');
+    expect(mockRouter.push).toHaveBeenCalledWith({
+      pathname: '/products/[id]',
+      params: { id: '1' },
+    });
+  });
+
+  it('[INT-03] details with an invalid id show not found', async () => {
+    mockParams = { id: 'abc' };
+    await renderScreen(<ProductDetailsScreen />);
+    expect(await screen.findByTestId(TestIds.stateNotFound)).toBeOnTheScreen();
+  });
+
+  it('[INT-04] details of an unknown product show not found', async () => {
+    mockParams = { id: '99999' };
+    await renderScreen(<ProductDetailsScreen />);
+    expect(await screen.findByTestId(TestIds.stateNotFound)).toBeOnTheScreen();
+  });
+
+  it('[INT-05] back without history returns to the list', async () => {
+    mockParams = { id: '1' };
+    mockRouter.canGoBack.mockReturnValue(false);
+    await renderScreen(<ProductDetailsScreen />);
     expect(await screen.findByTestId(TestIds.detailsDescription)).toBeOnTheScreen();
     expect(screen.getByTestId(TestIds.detailsTitle)).toHaveTextContent(
       'Essence Mascara Lash Princess',
     );
-  });
-
-  it('[INT-03] deep link with an invalid id shows not found without a request', async () => {
-    await renderApp('/products/abc');
-    expect(await screen.findByTestId(TestIds.stateNotFound)).toBeOnTheScreen();
-  });
-
-  it('[INT-04] deep link to an unknown product shows not found', async () => {
-    await renderApp('/products/99999');
-    expect(await screen.findByTestId(TestIds.stateNotFound)).toBeOnTheScreen();
-  });
-
-  it('[INT-05] back from a deep-linked details screen returns to the list', async () => {
-    const router = await renderApp('/products/1');
-    fireEvent.press(await screen.findByTestId(TestIds.detailsBack));
-    expect(router.getPathname()).toBe('/');
-    expect(await screen.findByTestId(TestIds.productCard(1))).toBeOnTheScreen();
+    fireEvent.press(screen.getByTestId(TestIds.detailsBack));
+    await waitFor(() => expect(mockRouter.replace).toHaveBeenCalledWith('/'));
   });
 });
