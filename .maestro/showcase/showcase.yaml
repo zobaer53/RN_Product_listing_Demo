@@ -65,9 +65,11 @@ name: Showcase
       id: 'product-card-1'
     direction: UP
     speed: 40
+# Element-relative pull so it works on any screen size.
 - swipe:
-    start: '50%, 35%'
-    end: '50%, 85%'
+    from:
+      id: 'product-list'
+    direction: DOWN
     duration: 800
 - waitForAnimationToEnd:
     timeout: 3000

@@ -16,8 +16,15 @@ these flows.
 ## Prerequisites
 
 - Maestro CLI 2.x: `curl -fsSL "https://get.maestro.mobile.dev" | bash`
-- A booted Android emulator or iOS simulator with the app installed
-  (`npx expo run:android` / `npx expo run:ios`, or the CI debug APK).
+- One target with the app installed (`npx expo run:android` / `npx expo run:ios`, or the
+  CI debug APK):
+  - a physical Android device over USB (local runs use a Pixel 6a; pick it with
+    `maestro --device <serial> test …` when several devices are connected),
+  - an Android emulator (CI), or
+  - an iOS simulator.
+
+The flows avoid device-specific assumptions: no screen coordinates, scrolling uses
+`scrollUntilVisible`, and swipes are relative to an element.
 
 ## Two ways to run
 
@@ -32,17 +39,27 @@ maestro test --include-tags smoke .maestro/flows
 ### 2. Deterministic scenarios against the mock API
 
 Flows tagged `mock` drive the local mock server (`npm run mock-api`, port 4010) through
-`POST /__scenario` with a JSON body `{ "scenario": "<name>" }`. The app must be built to
-call the mock server instead of dummyjson:
+`POST /__scenario` with a JSON body `{ "scenario": "<name>" }`.
 
-- Android emulator: the device reaches the host as `http://10.0.2.2:4010`
-- iOS simulator: `http://localhost:4010`
+The app always talks to the mock server as `http://localhost:4010`, on every target:
+
+- Android (USB device or emulator): forward the device's port 4010 to the host with
+  `adb reverse tcp:4010 tcp:4010` (run it again after reconnecting the device or rebooting
+  the emulator). This replaces the emulator-only `10.0.2.2` alias.
+- iOS simulator: shares the host network, `localhost` works as is.
+
+Build or start the app with the mock base URL:
+
+```sh
+EXPO_PUBLIC_API_BASE_URL=http://localhost:4010 npx expo run:android
+```
 
 The scenario switch itself runs on the host, so `MOCK_API_URL` defaults to
 `http://localhost:4010` and only needs overriding when the server runs elsewhere:
 
 ```sh
 npm run mock-api &
+adb reverse tcp:4010 tcp:4010
 maestro test --include-tags mock .maestro/flows
 maestro test -e MOCK_API_URL=http://192.168.1.20:4010 --include-tags mock .maestro/flows
 ```
@@ -81,6 +98,13 @@ maestro test --exclude-tags android-only .maestro/flows
 # JUnit report (as in CI)
 maestro test --include-tags smoke --format junit --output maestro-report.xml .maestro/flows
 ```
+
+### Offline flows on a physical Android device
+
+E2E-09 and E2E-10 toggle airplane mode with `setAirplaneMode`, which works on emulators
+and on USB-connected devices. Airplane mode also cuts Wi-Fi, so a device attached through
+wireless adb would drop off mid-flow; keep the device on a USB cable. Both flows switch
+airplane mode back off when they finish, even on failure.
 
 ## Showcase
 

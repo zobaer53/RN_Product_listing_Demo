@@ -6,9 +6,11 @@ tags:
 - runFlow: ../subflows/launch.yaml
 - assertVisible:
     id: 'product-card-1'
+# Element-relative pull so it works on any screen size.
 - swipe:
-    start: '50%, 35%'
-    end: '50%, 85%'
+    from:
+      id: 'product-list'
+    direction: DOWN
     duration: 600
 - waitForAnimationToEnd:
     timeout: 5000
