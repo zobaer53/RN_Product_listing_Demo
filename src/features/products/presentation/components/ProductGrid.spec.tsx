@@ -66,9 +66,14 @@ describe('ProductGrid', () => {
     expect(onRefresh).toHaveBeenCalledTimes(1);
   });
 
-  it('[PC-03] disables pull to refresh when asked', async () => {
-    await renderWithProviders(<ProductGrid {...props({ refreshEnabled: false })} />);
-    expect(refreshControlOf()).toBeUndefined();
+  it('[PC-03] disables pull to refresh when asked, without removing the control', async () => {
+    // Adding/removing the control recreates the native scroll view on Android (scroll resets).
+    const onRefresh = jest.fn();
+    await renderWithProviders(<ProductGrid {...props({ onRefresh, refreshEnabled: false })} />);
+    const control = refreshControlOf();
+    expect(control?.props.enabled).toBe(false);
+    control?.props.onRefresh?.();
+    expect(onRefresh).not.toHaveBeenCalled();
   });
 
   it('[PC-12] keeps item positions stable when content above the list changes', async () => {
