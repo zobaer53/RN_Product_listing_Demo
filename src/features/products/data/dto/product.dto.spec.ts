@@ -53,8 +53,9 @@ describe('product DTO schemas', () => {
     });
 
     expect(list.products[0]?.brand).toBeUndefined();
+    expect(product.brand).toBeUndefined();
+    expect(product).not.toHaveProperty('extraField');
     expect(product).toMatchObject({
-      brand: undefined,
       category: '',
       description: '',
       tags: [],
