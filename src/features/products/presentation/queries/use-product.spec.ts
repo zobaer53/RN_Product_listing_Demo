@@ -46,11 +46,23 @@ describe('useProduct', () => {
   });
 
   it('[HOOK-05] has no placeholder when the product is not in any cached list', async () => {
+    let release: () => void = () => undefined;
+    const released = new Promise<void>((resolve) => (release = resolve));
+    server.use(
+      http.get(`${API_BASE_URL}/products/:id`, async () => {
+        await released;
+        return HttpResponse.json(product1);
+      }),
+    );
+
     const { result } = await renderHook(() => useProduct(1), {
       wrapper: createQueryWrapper(createTestQueryClient()),
     });
 
     expect(result.current.data).toBeUndefined();
+    expect(result.current.isPlaceholderData).toBe(false);
+
+    await act(async () => release());
     await waitFor(() => expect(result.current.status).toBe('success'));
     expect(result.current.isPlaceholderData).toBe(false);
   });
