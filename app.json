@@ -10,7 +10,7 @@
     "ios": {
       "bundleIdentifier": "com.zobaer53.productexplorer",
       "supportsTablet": false,
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "package": "com.zobaer53.productexplorer",
