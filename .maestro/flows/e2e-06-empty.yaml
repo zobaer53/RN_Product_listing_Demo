@@ -1,0 +1,20 @@
+appId: com.zobaer53.productexplorer
+name: E2E-06 empty catalogue shows the empty state
+tags:
+  - states
+  - mock
+onFlowStart:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: empty
+onFlowComplete:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: ok
+---
+- runFlow: ../subflows/launch.yaml
+- assertVisible:
+    id: 'state-empty'
+- assertVisible: 'No products yet'

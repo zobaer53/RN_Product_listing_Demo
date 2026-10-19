@@ -1,0 +1,29 @@
+appId: com.zobaer53.productexplorer
+name: E2E-12 deep link to an unknown product shows not found
+tags:
+  - states
+  - mock
+onFlowStart:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: not-found
+onFlowComplete:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: ok
+---
+- launchApp:
+    clearState: true
+- openLink: 'productexplorer://products/99999'
+- extendedWaitUntil:
+    visible:
+      id: 'state-not-found'
+    timeout: 20000
+- tapOn:
+    id: 'state-not-found-back'
+- extendedWaitUntil:
+    visible:
+      id: 'product-list|state-empty|state-error|state-offline'
+    timeout: 20000

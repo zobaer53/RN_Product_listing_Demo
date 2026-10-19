@@ -1,0 +1,19 @@
+appId: com.zobaer53.productexplorer
+name: E2E-03 scrolling to the end shows the end-of-list footer
+tags:
+  - pagination
+  - mock
+onFlowStart:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: products-25
+onFlowComplete:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: ok
+---
+- runFlow: ../subflows/launch.yaml
+- runFlow: ../subflows/scroll-to-end.yaml
+- assertVisible: "You've seen all 25 products"

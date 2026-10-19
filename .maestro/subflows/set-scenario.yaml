@@ -1,0 +1,12 @@
+# Usage:
+#   - runFlow:
+#       file: ../subflows/set-scenario.yaml
+#       env:
+#         SCENARIO: empty
+appId: com.zobaer53.productexplorer
+---
+- runScript:
+    file: ../scripts/set-scenario.js
+    env:
+      SCENARIO: ${SCENARIO || 'ok'}
+      MOCK_API_URL: ${MOCK_API_URL || 'http://localhost:4010'}

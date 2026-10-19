@@ -1,0 +1,11 @@
+appId: com.zobaer53.productexplorer
+name: E2E-01 list loads
+tags:
+  - smoke
+---
+- runFlow: ../subflows/launch.yaml
+- assertVisible:
+    id: 'product-list'
+- assertVisible:
+    id: 'product-card-1'
+- assertVisible: 'Showing \d+ of \d+'

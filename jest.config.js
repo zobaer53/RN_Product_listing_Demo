@@ -2,6 +2,8 @@
 module.exports = {
   preset: 'jest-expo',
   testEnvironment: '<rootDir>/tests/setup/jest-environment.js',
+  // Resolve the web implementations of Reanimated and Worklets (official Jest setup).
+  resolver: 'react-native-reanimated/jest/resolver',
   transform: {
     // msw v3 ships some dependencies as .mjs only
     '^.+\\.mjs$': 'babel-jest',
@@ -9,9 +11,14 @@ module.exports = {
   setupFilesAfterEnv: [
     '<rootDir>/tests/setup/restore-fetch.ts',
     '<rootDir>/tests/setup/jest.setup.ts',
+    '<rootDir>/tests/setup/native-mocks.ts',
   ],
-  testMatch: ['<rootDir>/src/**/*.spec.ts?(x)', '<rootDir>/tests/**/*.spec.ts?(x)'],
-  testPathIgnorePatterns: ['/node_modules/', '/.claude/', '/e2e/'],
+  testMatch: [
+    '<rootDir>/src/**/*.spec.ts?(x)',
+    '<rootDir>/tests/**/*.spec.ts?(x)',
+    '<rootDir>/plugins/**/*.spec.ts',
+  ],
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.claude/', '<rootDir>/e2e/'],
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@shopify/.*|react-native-paper|react-native-mmkv|react-native-nitro-modules|msw|@mswjs/.*|@msw/.*|until-async|rettime|outvariant|is-node-process|headers-polyfill|cookie|@open-draft/.*|strict-event-emitter|@tanstack/.*).+(?<!\\.mjs)$',
   ],

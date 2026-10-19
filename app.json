@@ -38,7 +38,8 @@
         {
           "configureAndroidBackup": true
         }
-      ]
+      ],
+      "./plugins/with-android-debug-signing"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,0 +1,10 @@
+# Scrolls the product list until the end-of-list footer shows up.
+appId: com.zobaer53.productexplorer
+---
+- scrollUntilVisible:
+    element:
+      id: 'list-footer-end'
+    direction: DOWN
+    speed: 60
+    visibilityPercentage: 50
+    timeout: 120000

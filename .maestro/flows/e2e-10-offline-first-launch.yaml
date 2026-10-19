@@ -1,0 +1,33 @@
+appId: com.zobaer53.productexplorer
+name: E2E-10 first launch offline, then reconnect (Android)
+tags:
+  - offline
+  - android-only
+onFlowComplete:
+  - setAirplaneMode: disabled
+---
+- setAirplaneMode: enabled
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'state-offline'
+    timeout: 20000
+- setAirplaneMode: disabled
+# The app refetches on reconnect; tap retry only if it has not done so yet.
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 10000
+    optional: true
+- runFlow:
+    when:
+      visible:
+        id: 'state-offline-retry'
+    commands:
+      - tapOn:
+          id: 'state-offline-retry'
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 30000

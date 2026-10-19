@@ -1,0 +1,16 @@
+appId: com.zobaer53.productexplorer
+name: E2E-11 deep link opens product details
+tags:
+  - smoke
+---
+- launchApp:
+    clearState: true
+- openLink: 'productexplorer://products/5'
+- extendedWaitUntil:
+    visible:
+      id: 'details-title'
+    timeout: 20000
+- assertVisible:
+    id: 'product-details'
+- assertVisible:
+    id: 'details-price'

@@ -1,0 +1,32 @@
+appId: com.zobaer53.productexplorer
+name: E2E-07 server error then retry recovers
+tags:
+  - states
+  - mock
+onFlowStart:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: error-500
+onFlowComplete:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: ok
+---
+- runFlow: ../subflows/launch.yaml
+- extendedWaitUntil:
+    visible:
+      id: 'state-error'
+    timeout: 30000
+- assertVisible: 'Something went wrong on our side'
+- runFlow:
+    file: ../subflows/set-scenario.yaml
+    env:
+      SCENARIO: ok
+- tapOn:
+    id: 'state-error-retry'
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 20000

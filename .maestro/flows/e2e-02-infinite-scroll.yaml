@@ -1,0 +1,21 @@
+appId: com.zobaer53.productexplorer
+name: E2E-02 infinite scroll loads the next page
+tags:
+  - pagination
+  - mock
+onFlowStart:
+  - runFlow:
+      file: ../subflows/set-scenario.yaml
+      env:
+        SCENARIO: ok
+---
+- runFlow: ../subflows/launch.yaml
+- assertVisible:
+    id: 'product-card-1'
+- scrollUntilVisible:
+    element:
+      id: 'product-card-11'
+    direction: DOWN
+    timeout: 30000
+- assertVisible:
+    id: 'product-card-11'

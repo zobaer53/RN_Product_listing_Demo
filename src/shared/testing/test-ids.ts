@@ -10,6 +10,7 @@ export const TestIds = {
   stateError: 'state-error',
   stateErrorRetry: 'state-error-retry',
   stateOffline: 'state-offline',
+  stateOfflineRetry: 'state-offline-retry',
   stateNotFound: 'state-not-found',
   stateNotFoundBack: 'state-not-found-back',
   offlineBanner: 'offline-banner',
@@ -29,4 +30,5 @@ export const TestIds = {
   detailsDescription: 'details-description',
   detailsSpecs: 'details-specs',
   detailsReviews: 'details-reviews',
+  detailsSkeleton: 'details-skeleton',
 } as const;

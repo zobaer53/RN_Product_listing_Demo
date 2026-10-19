@@ -1,0 +1,3 @@
+# Workspace configuration for `maestro test .maestro/flows`.
+flows:
+  - 'flows/*'

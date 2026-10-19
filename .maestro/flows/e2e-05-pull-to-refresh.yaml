@@ -1,0 +1,22 @@
+appId: com.zobaer53.productexplorer
+name: E2E-05 pull to refresh keeps the list
+tags:
+  - smoke
+---
+- runFlow: ../subflows/launch.yaml
+- assertVisible:
+    id: 'product-card-1'
+# Element-relative pull so it works on any screen size.
+- swipe:
+    from:
+      id: 'product-list'
+    direction: DOWN
+    duration: 600
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible:
+      id: 'product-card-1'
+    timeout: 15000
+- assertNotVisible:
+    id: 'snackbar-refresh-error'

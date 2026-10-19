@@ -1,0 +1,13 @@
+# Cold-starts the app with a clean state and waits for the list or any full-screen state.
+appId: com.zobaer53.productexplorer
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'product-list|state-loading|state-empty|state-error|state-offline|state-not-found'
+    timeout: 20000
+- extendedWaitUntil:
+    notVisible:
+      id: 'state-loading'
+    timeout: 30000
