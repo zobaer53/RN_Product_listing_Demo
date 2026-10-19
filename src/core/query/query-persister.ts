@@ -2,14 +2,14 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import type { PersistQueryClientOptions, Persister } from '@tanstack/react-query-persist-client';
 
 import { CACHE_BUSTER, CACHE_MAX_AGE_MS } from '../config/env';
-import type { KeyValueStorage } from '../storage/key-value-storage';
+import type { PersistableStorage } from '../storage/key-value-storage';
 
 /** Storage entry holding the dehydrated query cache. */
 export const QUERY_CACHE_KEY = 'product-explorer.query-cache';
 
 const PERSIST_THROTTLE_MS = 1_000;
 
-export const createQueryPersister = (storage: KeyValueStorage): Persister =>
+export const createQueryPersister = (storage: PersistableStorage): Persister =>
   createAsyncStoragePersister({
     storage,
     key: QUERY_CACHE_KEY,
@@ -27,7 +27,7 @@ export const persistOptions = {
 
 /** Ready-to-use `persistOptions` for `PersistQueryClientProvider`. */
 export const createPersistOptions = (
-  storage: KeyValueStorage,
+  storage: PersistableStorage,
 ): Omit<PersistQueryClientOptions, 'queryClient'> => ({
   ...persistOptions,
   persister: createQueryPersister(storage),

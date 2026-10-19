@@ -9,9 +9,10 @@ import { PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useAppLifecycle } from '@core/bootstrap/use-app-lifecycle';
-import { useSecureCacheStorage } from '@core/bootstrap/use-secure-cache-storage';
 import { createQueryClient } from '@core/query/query-client';
 import { createPersistOptions } from '@core/query/query-persister';
+import { createDeferredStorage } from '@core/storage/deferred-storage';
+import { openSecureCacheStorage } from '@core/storage/encrypted-storage';
 import { appFonts } from '@shared/theme/fonts';
 import { paperTheme } from '@shared/theme/paper-theme';
 
@@ -22,7 +23,12 @@ const styles = { root: { flex: 1 } } as const;
 export default function RootLayout() {
   const [queryClient] = useState(createQueryClient);
   const [fontsLoaded, fontError] = useFonts(appFonts);
-  const storage = useSecureCacheStorage();
+  // The navigator must mount immediately (deep links); the cache store opens in the background.
+  const [persistOptions] = useState(() =>
+    createPersistOptions(
+      createDeferredStorage(openSecureCacheStorage().then((result) => result.storage)),
+    ),
+  );
   const [cacheRestored, setCacheRestored] = useState(false);
   useAppLifecycle();
 
@@ -33,15 +39,13 @@ export default function RootLayout() {
     if (fontsReady && cacheRestored) void SplashScreen.hideAsync();
   }, [fontsReady, cacheRestored]);
 
-  if (!fontsReady || !storage) return null;
-
   return (
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
         <PaperProvider theme={paperTheme}>
           <PersistQueryClientProvider
             client={queryClient}
-            persistOptions={createPersistOptions(storage)}
+            persistOptions={persistOptions}
             onSuccess={() => setCacheRestored(true)}
             onError={() => setCacheRestored(true)}
           >
