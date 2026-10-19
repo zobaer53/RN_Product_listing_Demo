@@ -10,6 +10,9 @@ import { ProductCard } from './ProductCard';
 
 const COLUMNS = 2;
 const END_REACHED_THRESHOLD = 0.5;
+// Pages are only appended, so FlashList's default position keeping is not needed; it shifted
+// rows (leaving a blank first row) when the offline banner above the list was removed.
+const MVCP_DISABLED = { disabled: true } as const;
 
 export interface ProductGridProps {
   products: ProductSummary[];
@@ -66,6 +69,7 @@ export function ProductGrid({
       ListHeaderComponent={header}
       ListFooterComponent={footer}
       contentContainerStyle={styles.content}
+      maintainVisibleContentPosition={MVCP_DISABLED}
     />
   );
 }

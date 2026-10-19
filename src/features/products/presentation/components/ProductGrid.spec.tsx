@@ -1,3 +1,4 @@
+import { FlashList } from '@shopify/flash-list';
 import { screen, userEvent } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
 import { Text, type RefreshControlProps } from 'react-native';
@@ -8,6 +9,18 @@ import { makeProductSummaries } from '@tests/fixtures/product-entities';
 
 import { ProductGrid, type ProductGridProps } from './ProductGrid';
 import { ProductGridSkeleton } from './ProductGridSkeleton';
+
+// Pass-through spy so specs can assert what the grid hands to FlashList.
+jest.mock('@shopify/flash-list', () => {
+  const actual = jest.requireActual<typeof import('@shopify/flash-list')>('@shopify/flash-list');
+  const { createElement } = jest.requireActual<typeof import('react')>('react');
+  return {
+    ...actual,
+    FlashList: jest.fn((listProps: import('@shopify/flash-list').FlashListProps<unknown>) =>
+      createElement(actual.FlashList, listProps),
+    ),
+  };
+});
 
 const props = (overrides: Partial<ProductGridProps> = {}): ProductGridProps => ({
   products: makeProductSummaries(4),
@@ -61,9 +74,8 @@ describe('ProductGrid', () => {
   it('[PC-12] keeps item positions stable when content above the list changes', async () => {
     // An append-only grid must not shift rows when the banner or header resizes.
     await renderWithProviders(<ProductGrid {...props()} />);
-    expect(screen.getByTestId(TestIds.productList)).toHaveProp('maintainVisibleContentPosition', {
-      disabled: true,
-    });
+    const listProps = jest.mocked(FlashList).mock.lastCall?.[0];
+    expect(listProps?.maintainVisibleContentPosition).toEqual({ disabled: true });
   });
 });
 
