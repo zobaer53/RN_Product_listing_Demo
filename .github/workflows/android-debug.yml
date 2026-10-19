@@ -81,7 +81,8 @@ jobs:
           ANDROID_DEBUG_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_DEBUG_KEYSTORE_PASSWORD }}
           ANDROID_DEBUG_KEY_ALIAS: ${{ secrets.ANDROID_DEBUG_KEY_ALIAS }}
           ANDROID_DEBUG_KEY_PASSWORD: ${{ secrets.ANDROID_DEBUG_KEY_PASSWORD }}
-        run: ./gradlew assembleDebug --no-daemon
+        # arm64-v8a for real devices, x86_64 for the CI emulator; keeps the shareable APK small.
+        run: ./gradlew assembleDebug --no-daemon -PreactNativeArchitectures=arm64-v8a,x86_64
 
       - name: Verify APK signature
         run: |
