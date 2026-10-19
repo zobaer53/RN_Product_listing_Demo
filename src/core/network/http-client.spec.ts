@@ -6,7 +6,9 @@ import { server } from '@tests/msw/server';
 
 import { createHttpClient, isAllowedBaseUrl } from './http-client';
 
-const BASE_URL = 'https://dummyjson.com';
+// Dedicated host: aborted requests can leave a pooled (mocked) connection behind in the Jest
+// worker, which must not be reused by other spec files talking to the product API host.
+const BASE_URL = 'https://http-client.test';
 const client = createHttpClient({ baseUrl: BASE_URL, timeoutMs: 1_000 });
 const itemSchema = z.object({ id: z.number(), title: z.string() });
 
@@ -18,6 +20,24 @@ const rejectionOf = async (promise: Promise<unknown>): Promise<AppError> => {
     throw new Error(`expected AppError, got ${String(error)}`);
   }
   throw new Error('expected the request to fail');
+};
+
+/**
+ * A slow endpoint whose handler lifecycle the test can await, so no intercepted request is
+ * still in flight when the file finishes (it would leak into the next test file).
+ */
+const useSlowEndpoint = () => {
+  const started = Promise.withResolvers<void>();
+  const finished = Promise.withResolvers<void>();
+  server.use(
+    http.get(`${BASE_URL}/slow`, async () => {
+      started.resolve();
+      await delay(100);
+      finished.resolve();
+      return HttpResponse.json({});
+    }),
+  );
+  return { started: started.promise, finished: finished.promise };
 };
 
 describe('createHttpClient', () => {
@@ -52,29 +72,21 @@ describe('createHttpClient', () => {
   );
 
   it('[CORE-HTTP-03] rejects with timeout when the response is slower than the deadline', async () => {
-    server.use(
-      http.get(`${BASE_URL}/slow`, async () => {
-        await delay(500);
-        return HttpResponse.json({});
-      }),
-    );
+    const slow = useSlowEndpoint();
     const impatient = createHttpClient({ baseUrl: BASE_URL, timeoutMs: 20 });
 
     const error = await rejectionOf(impatient.get('/slow'));
 
     expect(error.kind).toBe('timeout');
+    await slow.finished;
   });
 
   it('[CORE-HTTP-04] rejects with cancelled when the caller aborts', async () => {
-    server.use(
-      http.get(`${BASE_URL}/slow`, async () => {
-        await delay(500);
-        return HttpResponse.json({});
-      }),
-    );
+    const slow = useSlowEndpoint();
     const controller = new AbortController();
 
     const pending = client.get('/slow', { signal: controller.signal });
+    await slow.started;
     controller.abort();
     const error = await rejectionOf(pending);
 
@@ -82,6 +94,7 @@ describe('createHttpClient', () => {
 
     const alreadyAborted = await rejectionOf(client.get('/slow', { signal: controller.signal }));
     expect(alreadyAborted.kind).toBe('cancelled');
+    await slow.finished;
   });
 
   it('[CORE-HTTP-05] rejects with parse for malformed JSON or schema mismatches', async () => {
